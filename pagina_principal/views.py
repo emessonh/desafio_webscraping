@@ -18,9 +18,8 @@ def pagina_inicial(request):
     
 def buscar_dados(request):
     if request.method == 'GET':
-        modalidade = request.GET.get('modalidade')
-        uf = request.GET.get('uf')
-        print(modalidade, uf)
+        modalidade = request.GET.get('regiao')
+        uf = request.GET.get('ano')
         automacao = automação()
         if automacao:
             messages.success(request, 'Dados recuperados com sucesso')

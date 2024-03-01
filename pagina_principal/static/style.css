@@ -6,11 +6,22 @@
 
 body{
     margin: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: #ffffff;
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7vh;
+    background-color: darkseagreen;
+}
+
+#body-pagina{
+    height: 78vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 h1{
@@ -45,7 +56,7 @@ h1{
     width: 100vh;
 }
 
-#campo-modalidade, #campo-uf{
+#campo-regiao, #campo-ano{
     display: flex;
     align-items: center;
 }
@@ -62,3 +73,15 @@ h1{
 #feedback{
     margin-top: 1rem;
 }
+
+footer{
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkseagreen;
+}
+
+/* .body-footer{
+
+} */
