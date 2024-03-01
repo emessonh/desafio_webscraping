@@ -1,4 +1,8 @@
 from django.shortcuts import render
+import selenium
+
+def automação():
+    ...
 
 def pagina_inicial(request):
     if request.method == 'POST':
