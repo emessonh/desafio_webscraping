@@ -3,3 +3,6 @@ Versão do Python:
 
 Versão ChromeDriver 
     - 122.0.6261.94
+
+Baixar dependências:
+    - pip install -r requirements.txt
