@@ -18,20 +18,22 @@
                     <div id="campos">
                         <div id="campo-modalidade">
                             <label for="modalidade" class="form-label">Modalidade: </label>
-                            <select name="modalidade" id="modalidade" class="form-select">
+                            <select name="modalidade" id="modalidade" class="form-select" name="modalidade">
                                 <option value="teste">teste</option>
                                 <option value="teste2">teste2</option>
                             </select>
                         </div>
                         <div id="campo-uf">
                             <label for="uf" class="form-label">UF: </label>
-                            <select name="uf" id="uf" class="form-select">
+                            <select name="uf" id="uf" class="form-select" name="uf">
                                 <option value="AL">Alagoas</option>
                             </select>
                         </div>
                     </div>
-                    {% if msg %}
-                        <p id="feedback">{{msg}}</p>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p id="feedback">{{message}}</p>
+                        {% endfor %}
                     {% endif %}
                     <div id="botao">
                         <button type="submit" class="btn btn-outline-success">Pesquisar</button>

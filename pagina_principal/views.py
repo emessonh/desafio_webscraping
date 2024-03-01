@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from selenium import webdriver
+from django.contrib import messages
 import time
 
 def automação():
     try:
         driver = webdriver.Chrome()
-        driver.get('https://www.selenium.dev/selenium/web/web-form.html')
+        driver.get('https://pncp.gov.br/app/editais?q=&status=recebendo_proposta&pagina=1')
         time.sleep(1)
         driver.close()
         return True
@@ -13,21 +14,19 @@ def automação():
         return False
 
 def pagina_inicial(request):
-    # if request.method == 'GET':
-    #     automacao = automação()
-    #     if automacao:
-    #         return render(request, 'index.html', {'msg': 'Dados recuperados com sucesso'})
-    #     else:
-    #         return render(request, 'index.html', {'msg': 'Erro ao recuperar dados'})
-    # else:
     return render(request, 'index.html')
     
 def buscar_dados(request):
     if request.method == 'GET':
+        modalidade = request.GET.get('modalidade')
+        uf = request.GET.get('uf')
+        print(modalidade, uf)
         automacao = automação()
         if automacao:
-            return render(request, 'index.html', {'msg': 'Dados recuperados com sucesso'})
+            messages.success(request, 'Dados recuperados com sucesso')
+            return redirect('/')
         else:
-            return render(request, 'index.html', {'msg': 'Erro ao recuperar dados'})
+            messages.warning(request, 'Erro ao recuperar os dados')
+            return redirect('/')
     else:
-        return render(request,{'msg': 'Erro ao processar envio do formulário'})
+        return render(request, 'index.html')
