@@ -21,5 +21,6 @@ from . import views
 
 urlpatterns = [
     path('', views.pagina_inicial),
+    path('buscar_dados', views.buscar_dados),
 
 ]
