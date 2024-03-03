@@ -29,6 +29,9 @@ INSTALAÇÃO E VERSÕES:
             2. Link para verificar as versões do webdriver e seu respectivo Google compatíve:
                 - https://chromedriver.chromium.org/downloads
 
+        4. Executar a aplicação:
+            1. py manage.py runserver
+
 ESTRUTURA DO CÓDIGO:
 
     1. Utilização do django para criação dos filtros;
