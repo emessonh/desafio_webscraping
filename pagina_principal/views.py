@@ -28,12 +28,7 @@ def automacao(regiao, referencia, desoneracao, link):
         mes = referencia_dividida[1]
         desoneracao_traco = desoneracao.replace('_', '-')
         desoneracao_maiusculo = desoneracao.upper()
-        # status = requests.get(f'http://www.infraestrutura.mg.gov.br/images/documentos/precosetop/{ano}/Planilha-Precos-SETOP-{ano}/{sequencia_mes[mes]}-{mes}/{desoneracao_traco}/{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao_nome_link}_{desoneracao_maiusculo}.xlsx')
-        # print('resposta da request ', status.status_code())
-        # if status.status_code == 200:
         driver.get(link)
-        # else:
-            # driver.get(f'http://www.infraestrutura.mg.gov.br/images/documentos/precosetop/{ano}/Planilha-Precos-SETOP-{ano}/{sequencia_mes[mes]}-{mes}/{desoneracao_traco}/{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao_nome_link}_{desoneracao_maiusculo}.xlsb')
         time.sleep(15)
         driver.close()
         return True
@@ -53,7 +48,6 @@ def banco(regiao, ano, mes, desoneracao):
         c += 1
 
     excel_tratado = pd.read_excel(rf'C:\Users\{usuario}\Downloads\{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao}_{desoneracao}.xlsx', sheet_name='Relatório', skiprows=colunas_puladas).rename(columns={'CÓDIGO':'codigo', 'DESCRIÇÃO DO SERVIÇO':'descricao', 'UNIDADE':'unidade', 'CUSTO UNITÁRIO':'custo_unitario'})
-    print(rf'C:\Users\{usuario}\Downloads\{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao}_{desoneracao}.xlsx')
     excel_tratado = excel_tratado.drop(index=len(excel_tratado)-1)
     colunas_excel = excel_tratado.columns
 
@@ -86,8 +80,6 @@ def buscar_dados(request):
         resposta_auto = None
         if resposta.status_code == 200:
             resposta_auto = automacao(regiao, referencia, desoneracao, link)
-        print(f'http://www.infraestrutura.mg.gov.br/images/documentos/precosetop/{ano}/Planilha-Precos-SETOP-{ano}/{sequencia_mes[mes]}-{mes}/{desoneracao_traco}/{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao_nome_link}_{desoneracao_maiusculo}.xlsx')
-        print(resposta.status_code)
 
         extracao_banco = banco(regiao_nome_link, ano, mes, desoneracao_maiusculo)
         if resposta_auto == True and extracao_banco == True:
