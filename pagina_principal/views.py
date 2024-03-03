@@ -6,17 +6,22 @@ import time
 import pandas as pd
 import os
 from .models import SETOP
+import requests
 # from django_pandas.io import read_frame
+
 
 usuario = os.getlogin()
 sequencia_mes = {'Janeiro':'01', 'Marco':'03', 'Abril':'04', 'Junho':'06', 'Julho':'07', 'Agosto':'08', 'Setembro':'09',
                          'Outubro':'10'}
 
+def pagina_inicial(request):
+    return render(request, 'index.html')
+
 def ler_excel(regiao, ano, mes, desoneracao):
     excel = pd.read_excel(rf'C:\Users\{usuario}\Downloads\{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao}_{desoneracao}.xlsx', sheet_name='Relatório')
     return excel
 
-def automacao(regiao, referencia, desoneracao):
+def automacao(regiao, referencia, desoneracao, link):
     driver = webdriver.Chrome()
     try:
         regiao_dividida = regiao.split('_')
@@ -26,12 +31,10 @@ def automacao(regiao, referencia, desoneracao):
         mes = referencia_dividida[1]
         desoneracao_traco = desoneracao.replace('_', '-')
         desoneracao_maiusculo = desoneracao.upper()
-        # sequencia_mes = {'Janeiro':'01', 'Marco':'03', 'Abril':'04', 'Junho':'06', 'Julho':'07', 'Agosto':'08', 'Setembro':'09',
-        #                  'Outubro':'10'}
         # status = requests.get(f'http://www.infraestrutura.mg.gov.br/images/documentos/precosetop/{ano}/Planilha-Precos-SETOP-{ano}/{sequencia_mes[mes]}-{mes}/{desoneracao_traco}/{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao_nome_link}_{desoneracao_maiusculo}.xlsx')
         # print('resposta da request ', status.status_code())
-        # if status.status_code() == 200:
-        driver.get(f'http://www.infraestrutura.mg.gov.br/images/documentos/precosetop/{ano}/Planilha-Precos-SETOP-{ano}/{sequencia_mes[mes]}-{mes}/{desoneracao_traco}/{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao_nome_link}_{desoneracao_maiusculo}.xlsx')
+        # if status.status_code == 200:
+        driver.get(link)
         # else:
             # driver.get(f'http://www.infraestrutura.mg.gov.br/images/documentos/precosetop/{ano}/Planilha-Precos-SETOP-{ano}/{sequencia_mes[mes]}-{mes}/{desoneracao_traco}/{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao_nome_link}_{desoneracao_maiusculo}.xlsb')
         time.sleep(15)
@@ -65,23 +68,30 @@ def banco(regiao, ano, mes, desoneracao):
     # adiciona no banco
     SETOP.objects.bulk_create([SETOP(codigo=row['codigo'], descricao=row['descricao'], unidade=row['unidade'], custo_unitario=row['custo_unitario']) for index, row in excel_tratado.iterrows()])
     return True
-
-def pagina_inicial(request):
-    return render(request, 'index.html')
     
 def buscar_dados(request):
     if request.method == 'GET':
-        # Aciona automação
         regiao = request.GET.get('regiao')
         referencia = request.GET.get('referencia')
         desoneracao = request.GET.get('desoneracao')
-        resposta_auto = automacao(regiao, referencia, desoneracao)
+
         regiao_dividida = regiao.split('_')
         regiao_nome_link = regiao_dividida[0]
         desoneracao_maiusculo = desoneracao.upper()
+        desoneracao_traco = desoneracao.replace('_', '-') 
         referencia_dividida = referencia.split('/')
         ano = referencia_dividida[0]
         mes = referencia_dividida[1]
+
+        # Verifica qual o link e aciona a automação
+        link = f'http://www.infraestrutura.mg.gov.br/images/documentos/precosetop/{ano}/Planilha-Precos-SETOP-{ano}/{sequencia_mes[mes]}-{mes}/{desoneracao_traco}/{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao_nome_link}_{desoneracao_maiusculo}.xlsx'
+        resposta = requests.get(link)
+        resposta_auto = None
+        if resposta.status_code == 200:
+            resposta_auto = automacao(regiao, referencia, desoneracao, link)
+        print(f'http://www.infraestrutura.mg.gov.br/images/documentos/precosetop/{ano}/Planilha-Precos-SETOP-{ano}/{sequencia_mes[mes]}-{mes}/{desoneracao_traco}/{ano}{sequencia_mes[mes]}_Planilha_Precos_SETOP_{regiao_nome_link}_{desoneracao_maiusculo}.xlsx')
+        print(resposta.status_code)
+
         extracao_banco = banco(regiao_nome_link, ano, mes, desoneracao_maiusculo)
         if resposta_auto == True and extracao_banco == True:
             messages.success(request, 'Dados recuperados com sucesso')
@@ -92,4 +102,3 @@ def buscar_dados(request):
 
     else:
         return render(request, 'index.html')
-    
