@@ -20,6 +20,7 @@ nav{
 #body-pagina{
     height: 78vh;
     display: flex;
+    /* flex-wrap: wrap; */
     flex-direction: column;
     justify-content: center;
 }
@@ -40,9 +41,10 @@ h1{
     width: 100%;
 }
 
-#campos{
+.campos{
     display: flex;
     justify-content: space-between;
+    margin: 5px;
 }
 
 #botao{
@@ -56,7 +58,7 @@ h1{
     width: 100vh;
 }
 
-#campo-regiao, #campo-ano{
+#campo-regiao, #campo-referencia{
     display: flex;
     align-items: center;
 }
@@ -82,6 +84,32 @@ footer{
     background-color: darkseagreen;
 }
 
+#desoneracao{
+    width: 85%;
+}
+
+#campo-desoneracao{
+    justify-content: left;
+    align-items: center;
+}
+
 /* .body-footer{
 
 } */
+
+@media(max-width: 450px){
+    nav{
+        width: 100%;
+        height: 10vh;
+    }
+
+    footer{
+        height: 15vh;
+    }
+
+    #body-pagina{
+        height: 75vh;
+    }
+}
+
+

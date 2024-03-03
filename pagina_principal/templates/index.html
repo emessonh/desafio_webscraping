@@ -10,37 +10,52 @@
 </head>
 <body>
     <nav>
-        Navbar
+        Sistema de extração
     </nav>
     <div id="body-pagina">
-        <h1>Filtros para pesquisa</h1>
+        <h1>Filtros para Extração</h1>
         <div id="form">
             <form action='buscar_dados' method="get">
                 {% csrf_token %}
                 <div id="campos-form">
-                    <div id="campos">
+                    <div class="campos">
                         <div id="campo-regiao">
                             <label for="regiao" class="form-label">Região:</label>
                             <select name="regiao" id="regiao" class="form-select" name="regiao">
-                                <option value="todos">Todos</option>
-                                <option value="central">Central</option>
-                                <option value="jequitinhonha_mucuri">Jequitinhonha e Mucuri</option>
-                                <option value="leste">Leste</option>
-                                <option value="norte">Norte</option>
-                                <option value="sul">Sul</option>
-                                <option value="triangulo_e_alto_paranaiba">Triângulo e Alto Paranaíba</option>
+                                <option value="Central">Central</option>
+                                <option value="Jequitinhonha_mucuri">Jequitinhonha e Mucuri</option>
+                                <option value="Leste">Leste</option>
+                                <option value="Norte">Norte</option>
+                                <option value="Sul">Sul</option>
+                                <option value="Triangulo_e_alto_paranaiba">Triângulo e Alto Paranaíba</option>
                             </select>
                         </div>
-                        <div id="campo-ano">
-                            <label for="ano" class="form-label">Ano:</label>
-                            <select name="ano" id="ano" class="form-select" name="ano">
-                                <option value="todos">Todos</option>
-                                <option value="2023">2023</option>
-                                <option value="2023">2022</option>
-                                <option value="2023">2021</option>
-                                <option value="2023">2020</option>
+                        <div id="campo-referencia">
+                            <label for="referencia" class="form-label">Referência:</label>
+                            <select name="referencia" id="referencia" class="form-select" name="referencia">
+                                <option value="2023/Agosto">2023/Agosto</option>
+                                <option value="2023/Abril">2023/Abril</option>
+                                <option value="2023/Janeiro">2023/Janeiro</option>
+                                <option value="2022/Outubro">2022/Outubro</option>
+                                <option value="2022/Junho">2022/Junho</option>
+                                <option value="2022/Abril">2022/Abril</option>
+                                <option value="2022/Marco">2022/Março</option>
+                                <option value="2022/Janeiro">2022/Janeiro</option>
+                                <option value="2021/Outubro">2021/Outubro</option>
+                                <option value="2021/Julho">2021/Julho</option>
+                                <option value="2021/Abril">2021/Abril</option>
+                                <option value="2020/Setembro">2020/Setembro</option>
+                                <option value="2020/Julho">2020/Julho</option>
+                                <option value="2020/Abril">2020/Abril</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="campos" id="campo-desoneracao">
+                        <label for="desoneracao" class="form-label">Desoneração:</label>
+                        <select name="desoneracao" class="form-select" id="desoneracao">
+                            <option value="com_desoneracao">Com desoneração</option>
+                            <option value="sem_desoneracao">Sem desoneração</option>
+                        </select>
                     </div>
                     {% if messages %}
                         {% for message in messages %}
@@ -56,7 +71,7 @@
     </div>
     <footer>
         <div class="body-footer">
-            @Web Scraping@
+            @Copyright
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

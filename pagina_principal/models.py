@@ -13,9 +13,9 @@ from django.db import models
 #     valor = models.FloatField()
 
 class SETOP(models.Model):
-    codigo = models.CharField(max_length=20)
-    descricao = models.CharField(max_length=4000)
-    unidade = models.CharField(max_length=10)
-    custo_unitario = models.FloatField()
+    codigo = models.CharField(max_length=20, null=True)
+    descricao = models.CharField(max_length=4000, null=True)
+    unidade = models.CharField(max_length=10, null=True)
+    custo_unitario = models.CharField(max_length=20, null=True)
 
 
