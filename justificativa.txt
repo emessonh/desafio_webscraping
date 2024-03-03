@@ -1,0 +1,4 @@
+Justificativa da escolha das informações extraídas:
+
+Escolhi trabalhar com o download e extração dos arquivos em excel para mostrar que também sei trabalhar com
+tratamento de dados em arquivos, utilizando a biblioteca Pandas do próprio Python.

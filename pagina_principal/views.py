@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect
 from selenium import webdriver
-# from selenium.webdriver.common.by import By
 from django.contrib import messages
 import time
 import pandas as pd
 import os
 from .models import SETOP
 import requests
-# from django_pandas.io import read_frame
-
 
 usuario = os.getlogin()
 sequencia_mes = {'Janeiro':'01', 'Marco':'03', 'Abril':'04', 'Junho':'06', 'Julho':'07', 'Agosto':'08', 'Setembro':'09',
